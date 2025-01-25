@@ -3,4 +3,5 @@
 * Driver Node - It runs JVM. The driver initiates the spark session when the user submits the code. DAG scheduler creates a lineage graph and the actual data is processed only when the action command is called (Hence lazy evaluation). Task schedular communicates with the cluster manager in negotiating the resources and allocating jobs to the worker nodes. 
 
 * Worker Node - Each worker node can have multiple executors same as each executor with multiple cores. Data can be stored either inside the on-heap memory as partitions or outside the JVM process, which is handled directly by the OS through off-heap memory. 
-    - Memory architecture - 
+    - On Heap memory management - With in the executor, it is classified into 3 layers - Reserved memory for handling fault tolerance, Unified memory (60 percent of heap memory) that constitutes half Execution memory(JVM heap space used by data structures for shuffle operations) and half Storage memory (space used for cached data) and User memory for storing the data structures related to the user code.
+    - Off Heap memory management - Data is serialized (stored in the form of array of bytes). Unlike on heap memory which is controlled by the Garbage collector within JVM, off heap is directly managed by OS and the performace is slower than on heap. 
